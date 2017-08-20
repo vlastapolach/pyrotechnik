@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="cs-cz">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pyrotechnik</title>
+  <meta name="description" content="Máš 10 pokusů na zneškodnění nálože uhodnutím 4 místného kódu.">
+  <meta name="author" content="Vlasta Polach">
+  <link rel="shortcut icon" type="image/x-icon" href="http://vlastapolach.cz/img/favicon.ico">
+  <meta property="og:image" content="img/start.jpg" />
+  <meta property="og:title" content="Pyrotechnik" />
+  <meta property="og:description" content="Máš 10 pokusů na zneškodnění nálože uhodnutím 4 místného kódu." />
+
+  <!-- Bootstrap Core CSS + FontAwesome-->
+  <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <div id="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="keypad">
+            <div class="row">
+              <div class="col-xs-12 disp-cont">
+                <div class="display">
+                  &nbsp;
+                </div>
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col-xs-4">
+                <div class="button" id="7">
+                  7
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <div class="button" id="8">
+                  8
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <div class="button" id="9">
+                  9
+                </div>
+              </div>
+            </div>
+
+            <div class="row text-center">
+              <div class="col-xs-4">
+                <div class="button" id="4">
+                  4
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <div class="button" id="5">
+                  5
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <div class="button" id="6">
+                  6
+                </div>
+              </div>
+            </div>
+
+            <div class="row text-center">
+              <div class="col-xs-4">
+                <div class="button" id="1">
+                  1
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <div class="button" id="2">
+                  2
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <div class="button" id="3">
+                  3
+                </div>
+              </div>
+            </div>
+
+            <div class="row text-center">
+              <div class="col-xs-4">
+                <div class="button" id="0">
+                  0
+                </div>
+              </div>
+              <div class="col-xs-8">
+                <div class="button ok-button" id="ok">
+                  OK
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="right-column text-center">
+            <div class="results-tab">
+
+              <div class="row res-new-line">
+                <div class="col-xs-6">
+                  <div class="res-up" id="res1u">
+                      &nbsp;
+                  </div>
+                  <div class="res-down" id="res1d">
+                      <span class="pos1">&nbsp;</span><span class="pos2">&nbsp;</span><span class="pos3">&nbsp;</span><span class="pos4">&nbsp;</span>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <div class="res-up" id="res2u">
+                      &nbsp;
+                  </div>
+                  <div class="res-down" id="res2d">
+                      <span class="pos1">&nbsp;</span><span class="pos2">&nbsp;</span><span class="pos3">&nbsp;</span><span class="pos4">&nbsp;</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row res-new-line">
+                <div class="col-xs-6">
+                  <div class="res-up" id="res3u">
+                      &nbsp;
+                  </div>
+                  <div class="res-down" id="res3d">
+                      <span class="pos1">&nbsp;</span><span class="pos2">&nbsp;</span><span class="pos3">&nbsp;</span><span class="pos4">&nbsp;</span>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <div class="res-up" id="res4u">
+                      &nbsp;
+                  </div>
+                  <div class="res-down" id="res4d">
+                      <span class="pos1">&nbsp;</span><span class="pos2">&nbsp;</span><span class="pos3">&nbsp;</span><span class="pos4">&nbsp;</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row res-new-line">
+                <div class="col-xs-6">
+                  <div class="res-up" id="res5u">
+                      &nbsp;
+                  </div>
+                  <div class="res-down" id="res5d">
+                      <span class="pos1">&nbsp;</span><span class="pos2">&nbsp;</span><span class="pos3">&nbsp;</span><span class="pos4">&nbsp;</span>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <div class="res-up" id="res6u">
+                      &nbsp;
+                  </div>
+                  <div class="res-down" id="res6d">
+                      <span class="pos1">&nbsp;</span><span class="pos2">&nbsp;</span><span class="pos3">&nbsp;</span><span class="pos4">&nbsp;</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row res-new-line">
+                <div class="col-xs-6">
+                  <div class="res-up" id="res7u">
+                      &nbsp;
+                  </div>
+                  <div class="res-down" id="res7d">
+                      <span class="pos1">&nbsp;</span><span class="pos2">&nbsp;</span><span class="pos3">&nbsp;</span><span class="pos4">&nbsp;</span>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <div class="res-up" id="res8u">
+                      &nbsp;
+                  </div>
+                  <div class="res-down" id="res8d">
+                      <span class="pos1">&nbsp;</span><span class="pos2">&nbsp;</span><span class="pos3">&nbsp;</span><span class="pos4">&nbsp;</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row res-new-line">
+                <div class="col-xs-6">
+                  <div class="res-up" id="res9u">
+                      &nbsp;
+                  </div>
+                  <div class="res-down" id="res9d">
+                      <span class="pos1">&nbsp;</span><span class="pos2">&nbsp;</span><span class="pos3">&nbsp;</span><span class="pos4">&nbsp;</span>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <div class="res-up" id="res10u">
+                      &nbsp;
+                  </div>
+                  <div class="res-down" id="res10d">
+                      <span class="pos1">&nbsp;</span><span class="pos2">&nbsp;</span><span class="pos3">&nbsp;</span><span class="pos4">&nbsp;</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            Pokus <span class="try">0</span> z 10
+            <div class="manual">
+              <p>Máš 10 pokusů na zneškodnění nálože uhodnutím 4 místného kódu.</p>
+              <p>Pokud je číslice na správném pozici, zobrazí se symbol <span class="pos-yes">=</span></p>
+              <p>Pokud číslice v kódu není vůbec, zobrazí se symbol <span class="pos-no">x</span></p>
+              <p>Pokud je číslice v kódu, ale na jiné pozici, zobrazí se symbol <span class="pos-maybe">?</span></p>
+              <p>Číslice označené symboly <span class="pos-yes">=</span> a <span class="pos-maybe">?</span> můžou být v kódu vícekrát</p>
+              <p>Pokud se spleteš, piš dál. Kód se automaticky přepíše.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container text-right">
+      <a href="http://vlastapolach.cz" target="_blank">&copy; <span class="foot-link"></span> vlastapolach.cz</a>
+    </div>
+  </footer>
+
+  <!-- JS + jQuery -->
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/func.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,165 @@
+body {
+  color: white;
+  background-color: #333;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+a {
+	color: #ddd;
+}
+
+a:hover {
+	color: #fff;
+}
+
+.navbar {
+	border-radius: 0;
+	padding-top: 13px;
+	margin-bottom: 5px;
+}
+
+.button-start {
+	margin: 20px;
+}
+
+.link-start {
+	color: #fff;
+	text-decoration: underline;
+}
+
+.link-start:hover {
+	color: #fff;
+	text-decoration: none;
+}
+
+.good-luck {
+	padding: 20px 0;
+	font-size: 20px;
+}
+
+.screen-img {
+	margin-top: 20px;
+}
+
+.keypad {
+	font-family: 'PT Mono', monospace;
+	font-size: 16px;
+}
+
+.disp-cont {
+	overflow: hidden;
+}
+
+.display {
+	border: none;
+	padding: 2px 20px;
+	margin: 10px 0;
+	font-size: 30px;
+	background: #ccc;
+	background: linear-gradient(#ccc, #aaa);
+	color: #222;
+	min-height: 46px;
+}
+
+.button {
+	padding: 5px 0;
+	margin: 5px 0 5px;
+	border: 2px solid #111;
+	background: #222;
+	background: linear-gradient(-45deg, #222, #151515);
+}
+.button:hover {
+	background: #111;
+	background: linear-gradient(-45deg, #050505, #111);
+	cursor: pointer;
+}
+
+.ok-button {
+	background: #151515;
+	background: linear-gradient(-45deg, #151515, #111);
+}
+
+.right-column {
+	margin: 0px 15px;
+}
+
+.results-tab {
+	font-family: 'PT Mono', monospace;
+	font-size: 17px;
+	padding: 10px 0;
+}
+
+.res-new-line .col-xs-6 {
+	border: 1px solid #222;
+}
+
+.res-down {
+	margin-top: -10px;
+	margin-bottom: -3px;
+}
+
+.try {
+	font-weight: 700;
+}
+
+.manual {
+	margin-top: 10px;
+}
+
+.pos-yes {
+	color: #00de00;
+	font-weight: 700;
+}
+
+.pos-no {
+	color: #de0000;
+	font-weight: 700;
+}
+
+.pos-maybe {
+	color: #f9f506;
+	font-weight: 700;
+}
+
+footer {
+	margin-top: 20px;
+	font-size: 13px;
+}
+
+@media (min-width: 768px) {
+	body {
+    font-size: 16px;
+	}
+	.navbar {
+		border-radius: 0;
+		margin-bottom: 20px;
+	}
+	.keypad {
+		padding: 10px 20px;
+		font-size: 22px;
+	}
+	.display {
+		margin: 10px 0;
+		font-size: 60px;
+		min-height: 89px;
+	}
+	.button {
+		padding: 20px 0;
+		margin: 10px 0;
+	}
+	.results-tab {
+		font-size: 26px;
+	}
+	.right-column {
+		margin: 11px 15px;
+	}
+	.res-down {
+		margin-top: -15px;
+	}
+}
+
+@media (min-width: 992px) {
+	.keypad {
+		padding: 10px 50px;
+	}
