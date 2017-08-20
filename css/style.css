@@ -60,6 +60,20 @@ a:hover {
 	background: linear-gradient(#ccc, #aaa);
 	color: #222;
 	min-height: 46px;
+  position: relative;
+  z-index: 1;
+}
+
+#timer-screen {
+  color: #de0000;
+  position: relative;
+  z-index: 2;
+  top: -55px;
+  padding-right: 10px;
+}
+
+.red {
+  color: #de0000;
 }
 
 .button {
@@ -69,6 +83,7 @@ a:hover {
 	background: #222;
 	background: linear-gradient(-45deg, #222, #151515);
 }
+
 .button:hover {
 	background: #111;
 	background: linear-gradient(-45deg, #050505, #111);
@@ -144,6 +159,9 @@ footer {
 		font-size: 60px;
 		min-height: 89px;
 	}
+  #timer-screen {
+    top: -95px;
+  }
 	.button {
 		padding: 20px 0;
 		margin: 10px 0;
@@ -163,3 +181,4 @@ footer {
 	.keypad {
 		padding: 10px 50px;
 	}
+}

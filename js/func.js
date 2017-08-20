@@ -3,6 +3,8 @@ $(document).ready( function() {
   var guesCount = 0;
   var display = $(".display");
   display.html("");
+  printTimer = 59;
+  lessThanTen = ""
 
   goodResult1 = false;
   goodResult2 = false;
@@ -24,6 +26,61 @@ $(document).ready( function() {
       display.html("");
     }
   };
+
+  secondsTimer = setInterval(boomTimer, 1000);
+  function boomTimer() {
+
+    $(".boomTimer").text(printTimer);
+    if (printTimer < 1) {
+      boomScreen();
+    }
+    if (printTimer < 10) {
+      $(".boomTimer").text("0" + printTimer);
+      lessThanTen = "0";
+    }
+    printTimer -=1;
+  }
+
+
+
+  winScreen = function() {
+    $("#content").html(`
+        <div class="container">
+          <div class="row text-center">
+            <div class="col-sm-6">
+              <a href="game.html"><img src="img/win.jpg" class="img-responsive screen-img" alt ="Pyrotechnik"/></a>
+                <a href="game.html" class="btn btn-danger button-start btn-lg">Hrát znovu</a>
+            </div>
+            <div class="col-sm-6">
+              <p class="text-center good-luck">Gratulujeme!</p>
+              <p>Bomba je zneškodněna! Dnes nic nevybouchne - ne pod tvým dohledem! </p>
+              <p><strong>Počet pokusů k zneškodnění bomby: <span class="red">` + guesCount + `</span></strong><br /> <strong>Čas do výbuchu: <span class="red">0:` + lessThanTen + printTimer + `</span></strong></p>
+            </div>
+          </div>
+        </div>
+      `);
+      clearInterval(secondsTimer);
+  }
+
+  boomScreen = function() {
+    $("#content").html(`
+        <div class="container">
+          <div class="row text-center">
+            <div class="col-sm-6">
+              <a href="game.html"><img src="img/loose.jpg" class="img-responsive screen-img" alt ="Pyrotechnik"/></a>
+                <a href="game.html" class="btn btn-danger button-start btn-lg">Hrát znovu</a>
+            </div>
+            <div class="col-sm-6">
+              <p class="text-center good-luck">Neeeeeeee!</p>
+              <p>Bomba se odpálila!</p>
+            </div>
+          </div>
+        </div>
+      `);
+      clearInterval(secondsTimer);
+  }
+
+
 
   $("#1").click(function() {
     checkLength();
@@ -233,40 +290,11 @@ $(document).ready( function() {
       $(".display").text("")
 
       if (goodResult1 && goodResult2 && goodResult3 && goodResult4) {
-        $("#content").html(`
-
-            <div class="container">
-              <div class="row text-center">
-                <div class="col-sm-6">
-                  <a href="game.html"><img src="img/win.jpg" class="img-responsive screen-img" alt ="Pyrotechnik"/></a>
-                    <a href="game.html" class="btn btn-danger button-start btn-lg">Hrát znovu</a>
-                </div>
-                <div class="col-sm-6">
-                  <p class="text-center good-luck">Gratulujeme!</p>
-                  <p>Bomba je zneškodněna! Dnes nic nevybouchne - ne pod tvým dohledem! </p>
-                  <p>Počet pokusů k zneškodnění bomby: <strong>`+ guesCount +`</strong></p>
-                </div>
-              </div>
-            </div>
-          `);
+        winScreen();
       }
 
       if (guesCount == 11) {
-        $("#content").html(`
-
-            <div class="container">
-              <div class="row text-center">
-                <div class="col-sm-6">
-                  <a href="game.html"><img src="img/loose.jpg" class="img-responsive screen-img" alt ="Pyrotechnik"/></a>
-                    <a href="game.html" class="btn btn-danger button-start btn-lg">Hrát znovu</a>
-                </div>
-                <div class="col-sm-6">
-                  <p class="text-center good-luck">Neeeeeeee!</p>
-                  <p>Bomba se odpálila!</p>
-                </div>
-              </div>
-            </div>
-          `);
+        boomScreen();
       }
 
     }
