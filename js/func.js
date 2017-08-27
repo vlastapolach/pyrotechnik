@@ -48,9 +48,8 @@ $(document).ready(function() {
   localStorage.bestCount = 10;
   }
   if (localStorage.bestTime == NaN || localStorage.bestTime == undefined) {
-  localStorage.bestTime = 59;
+  localStorage.bestTime = 0;
   }
-
 
   bestCount = function() {
     if (guesCount < localStorage.bestCount) {
@@ -61,7 +60,7 @@ $(document).ready(function() {
   }
 
   bestTime = function() {
-    if (printTimer < localStorage.bestTime) {
+    if (printTimer > localStorage.bestTime) {
       return printTimer;
     } else {
       return localStorage.bestTime;
@@ -112,7 +111,7 @@ $(document).ready(function() {
                 </div>
                 <div class="col-sm-6">
                   <p>Nejlepší počet pokusů: <span class="red">` + bestCount() + `</span><br />
-                  <p>Nejlepší čas do výbuchu: <span class="red">` + lessThanTen + bestTime() + `</span></p>
+                  <p>Nejlepší čas do výbuchu: <span class="red">0:` + lessThanTen + bestTime() + `</span></p>
                 </div>
               </div>
             </div>`
