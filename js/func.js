@@ -1,21 +1,20 @@
-$(document).ready( function() {
-
+$(document).ready(function() {
   var guesCount = 0;
   var display = $(".display");
   display.html("");
   printTimer = 59;
-  lessThanTen = ""
+  lessThanTen = "";
 
   goodResult1 = false;
   goodResult2 = false;
   goodResult3 = false;
   goodResult4 = false;
 
-  getNumber = function(){
-    number1 = Math.floor(Math.random()* 10) ;
-    number2 = Math.floor(Math.random()* 10) ;
-    number3 = Math.floor(Math.random()* 10) ;
-    number4 = Math.floor(Math.random()* 10) ;
+  getNumber = function() {
+    number1 = Math.floor(Math.random() * 10);
+    number2 = Math.floor(Math.random() * 10);
+    number3 = Math.floor(Math.random() * 10);
+    number4 = Math.floor(Math.random() * 10);
   };
 
   getNumber();
@@ -29,7 +28,6 @@ $(document).ready( function() {
 
   secondsTimer = setInterval(boomTimer, 1000);
   function boomTimer() {
-
     $(".boomTimer").text(printTimer);
     if (printTimer < 1) {
       boomScreen();
@@ -38,13 +36,99 @@ $(document).ready( function() {
       $(".boomTimer").text("0" + printTimer);
       lessThanTen = "0";
     }
-    printTimer -=1;
+    printTimer -= 1;
+  }
+  if (localStorage.tryCount == NaN || localStorage.tryCount == undefined) {
+  localStorage.tryCount = 0;
+  }
+  if (localStorage.winCount == NaN || localStorage.winCount == undefined) {
+  localStorage.winCount = 0;
+  }
+  if (localStorage.bestCount == NaN || localStorage.bestCount == undefined) {
+  localStorage.bestCount = 10;
+  }
+  if (localStorage.bestTime == NaN || localStorage.bestTime == undefined) {
+  localStorage.bestTime = 59;
   }
 
 
+  bestCount = function() {
+    if (guesCount < localStorage.bestCount) {
+      return guesCount;
+    } else {
+      return localStorage.bestCount;
+    }
+  }
+
+  bestTime = function() {
+    if (printTimer < localStorage.bestTime) {
+      return printTimer;
+    } else {
+      return localStorage.bestTime;
+    }
+  }
+
+  progressBar = function() {
+    return Math.floor(localStorage.winCount / localStorage.tryCount * 100);
+  };
+
+  leaderboardScreen = function() {
+    if (localStorage.winCount == 0) {
+      $("#leaderboard").html(
+        `
+            <div class="container text-center">
+            <h3>Celkové výsledky</h3>
+              <div class="row">
+                <div class="col-xs-12">
+                  <p>Počet pokusů celkem: <span class="red">` + localStorage.tryCount + `</span><br />
+                  Počet výher celkem: <span class="red">` + localStorage.winCount + `</span></p>
+                  Úspěšnost: <br />
+                  <div class="progress">
+                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="` + progressBar() + `"
+                    aria-valuemin="0" aria-valuemax="100" style="width:` + progressBar() + `%">
+                      ` + progressBar() + `%
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>`
+      );
+    } else {
+      $("#leaderboard").html(
+        `
+            <div class="container text-center">
+            <h3>Celkové výsledky</h3>
+              <div class="row">
+                <div class="col-sm-6">
+                  <p>Počet pokusů celkem: <span class="red">` + localStorage.tryCount + `</span><br />
+                  Počet výher celkem: <span class="red">` + localStorage.winCount + `</span></p>
+                  Úspěšnost: <br />
+                  <div class="progress">
+                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="` + progressBar() + `"
+                    aria-valuemin="0" aria-valuemax="100" style="width:` + progressBar() + `%">
+                      ` + progressBar() + `%
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <p>Nejlepší počet pokusů: <span class="red">` + bestCount() + `</span><br />
+                  <p>Nejlepší čas do výbuchu: <span class="red">` + lessThanTen + bestTime() + `</span></p>
+                </div>
+              </div>
+            </div>`
+      );
+    }
+  }
 
   winScreen = function() {
-    $("#content").html(`
+    //If the browser supports localStorage, save the results
+    if (typeof Storage !== "undefined") {
+      localStorage.tryCount++;
+      localStorage.winCount++;
+      leaderboardScreen();
+    }
+      $("#content").html(
+      `
         <div class="container">
           <div class="row text-center">
             <div class="col-sm-6">
@@ -54,16 +138,27 @@ $(document).ready( function() {
             <div class="col-sm-6">
               <p class="text-center good-luck">Gratulujeme!</p>
               <p>Bomba je zneškodněna! Dnes nic nevybouchne - ne pod tvým dohledem! </p>
-              <p><strong>Počet pokusů k zneškodnění bomby: <span class="red">` + guesCount + `</span></strong><br /> <strong>Čas do výbuchu: <span class="red">0:` + lessThanTen + printTimer + `</span></strong></p>
+              <p><strong>Počet pokusů k zneškodnění bomby: <span class="red">` +
+        guesCount +
+        `</span></strong><br /> <strong>Čas do výbuchu: <span class="red">0:` +
+        lessThanTen +
+        printTimer +
+        `</span></strong></p>
             </div>
           </div>
         </div>
-      `);
-      clearInterval(secondsTimer);
-  }
+      `
+    );
+    clearInterval(secondsTimer);
+  };
 
   boomScreen = function() {
-    $("#content").html(`
+    //If the browser supports localStorage, save the results
+    if (typeof Storage !== "undefined") {
+      localStorage.tryCount++;
+      leaderboardScreen();
+    }
+      $("#content").html(`
         <div class="container">
           <div class="row text-center">
             <div class="col-sm-6">
@@ -77,10 +172,8 @@ $(document).ready( function() {
           </div>
         </div>
       `);
-      clearInterval(secondsTimer);
-  }
-
-
+    clearInterval(secondsTimer);
+  };
 
   $("#1").click(function() {
     checkLength();
@@ -124,8 +217,6 @@ $(document).ready( function() {
   });
 
   $("#ok").click(function() {
-
-
     if ($(".display").text().length > 3) {
       testValue = $(".display").text();
       addText = $(".display").text();
@@ -133,161 +224,158 @@ $(document).ready( function() {
       guesCount++;
 
       if (guesCount == 1) {
-      $("#res1u").text(addText);
-      $(".try").text("1");
-      $("#res1d").children().addClass("current");
+        $("#res1u").text(addText);
+        $(".try").text("1");
+        $("#res1d").children().addClass("current");
+      } else if (guesCount == 2) {
+        $("#res2u").text(addText);
+        $(".try").text("2");
+        $("#res1d").children().removeClass("current");
+        $("#res2d").children().addClass("current");
+      } else if (guesCount == 3) {
+        $("#res3u").text(addText);
+        $(".try").text("3");
+        $("#res1d").children().removeClass("current");
+        $("#res2d").children().removeClass("current");
+        $("#res3d").children().addClass("current");
+      } else if (guesCount == 4) {
+        $("#res4u").text(addText);
+        $(".try").text("4");
+        $("#res1d").children().removeClass("current");
+        $("#res2d").children().removeClass("current");
+        $("#res3d").children().removeClass("current");
+        $("#res4d").children().addClass("current");
+      } else if (guesCount == 5) {
+        $("#res5u").text(addText);
+        $(".try").text("5");
+        $("#res1d").children().removeClass("current");
+        $("#res2d").children().removeClass("current");
+        $("#res3d").children().removeClass("current");
+        $("#res4d").children().removeClass("current");
+        $("#res5d").children().addClass("current");
+      } else if (guesCount == 6) {
+        $("#res6u").text(addText);
+        $(".try").text("6");
+        $("#res1d").children().removeClass("current");
+        $("#res2d").children().removeClass("current");
+        $("#res3d").children().removeClass("current");
+        $("#res4d").children().removeClass("current");
+        $("#res5d").children().removeClass("current");
+        $("#res6d").children().addClass("current");
+      } else if (guesCount == 7) {
+        $("#res7u").text(addText);
+        $(".try").text("7");
+        $("#res1d").children().removeClass("current");
+        $("#res2d").children().removeClass("current");
+        $("#res3d").children().removeClass("current");
+        $("#res4d").children().removeClass("current");
+        $("#res5d").children().removeClass("current");
+        $("#res6d").children().removeClass("current");
+        $("#res7d").children().addClass("current");
+      } else if (guesCount == 8) {
+        $("#res8u").text(addText);
+        $(".try").text("8");
+        $("#res1d").children().removeClass("current");
+        $("#res2d").children().removeClass("current");
+        $("#res3d").children().removeClass("current");
+        $("#res4d").children().removeClass("current");
+        $("#res5d").children().removeClass("current");
+        $("#res6d").children().removeClass("current");
+        $("#res7d").children().removeClass("current");
+        $("#res8d").children().addClass("current");
+      } else if (guesCount == 9) {
+        $("#res9u").text(addText);
+        $(".try").text("9");
+        $("#res1d").children().removeClass("current");
+        $("#res2d").children().removeClass("current");
+        $("#res3d").children().removeClass("current");
+        $("#res4d").children().removeClass("current");
+        $("#res5d").children().removeClass("current");
+        $("#res6d").children().removeClass("current");
+        $("#res7d").children().removeClass("current");
+        $("#res8d").children().removeClass("current");
+        $("#res9d").children().addClass("current");
+      } else if (guesCount == 10) {
+        $("#res10u").text(addText);
+        $(".try").text("10");
+        $("#res1d").children().removeClass("current");
+        $("#res2d").children().removeClass("current");
+        $("#res3d").children().removeClass("current");
+        $("#res4d").children().removeClass("current");
+        $("#res5d").children().removeClass("current");
+        $("#res6d").children().removeClass("current");
+        $("#res7d").children().removeClass("current");
+        $("#res8d").children().removeClass("current");
+        $("#res9d").children().removeClass("current");
+        $("#res10d").children().addClass("current");
+        guesCount++;
       }
-      else if (guesCount == 2) {
-      $("#res2u").text(addText);
-      $(".try").text("2");
-      $("#res1d").children().removeClass("current");
-      $("#res2d").children().addClass("current");
-      }
-      else if (guesCount == 3) {
-      $("#res3u").text(addText);
-      $(".try").text("3");
-      $("#res1d").children().removeClass("current");
-      $("#res2d").children().removeClass("current");
-      $("#res3d").children().addClass("current");
-      }
-      else if (guesCount == 4) {
-      $("#res4u").text(addText);
-      $(".try").text("4");
-      $("#res1d").children().removeClass("current");
-      $("#res2d").children().removeClass("current");
-      $("#res3d").children().removeClass("current");
-      $("#res4d").children().addClass("current");
-      }
-      else if (guesCount == 5) {
-      $("#res5u").text(addText);
-      $(".try").text("5");
-      $("#res1d").children().removeClass("current");
-      $("#res2d").children().removeClass("current");
-      $("#res3d").children().removeClass("current");
-      $("#res4d").children().removeClass("current");
-      $("#res5d").children().addClass("current");
-      }
-      else if (guesCount == 6) {
-      $("#res6u").text(addText);
-      $(".try").text("6");
-      $("#res1d").children().removeClass("current");
-      $("#res2d").children().removeClass("current");
-      $("#res3d").children().removeClass("current");
-      $("#res4d").children().removeClass("current");
-      $("#res5d").children().removeClass("current");
-      $("#res6d").children().addClass("current");
-      }
-      else if (guesCount == 7) {
-      $("#res7u").text(addText);
-      $(".try").text("7");
-      $("#res1d").children().removeClass("current");
-      $("#res2d").children().removeClass("current");
-      $("#res3d").children().removeClass("current");
-      $("#res4d").children().removeClass("current");
-      $("#res5d").children().removeClass("current");
-      $("#res6d").children().removeClass("current");
-      $("#res7d").children().addClass("current");
-      }
-      else if (guesCount == 8) {
-      $("#res8u").text(addText);
-      $(".try").text("8");
-      $("#res1d").children().removeClass("current");
-      $("#res2d").children().removeClass("current");
-      $("#res3d").children().removeClass("current");
-      $("#res4d").children().removeClass("current");
-      $("#res5d").children().removeClass("current");
-      $("#res6d").children().removeClass("current");
-      $("#res7d").children().removeClass("current");
-      $("#res8d").children().addClass("current");
-      }
-      else if (guesCount == 9) {
-      $("#res9u").text(addText);
-      $(".try").text("9");
-      $("#res1d").children().removeClass("current");
-      $("#res2d").children().removeClass("current");
-      $("#res3d").children().removeClass("current");
-      $("#res4d").children().removeClass("current");
-      $("#res5d").children().removeClass("current");
-      $("#res6d").children().removeClass("current");
-      $("#res7d").children().removeClass("current");
-      $("#res8d").children().removeClass("current");
-      $("#res9d").children().addClass("current");
-      }
-      else if (guesCount == 10) {
-      $("#res10u").text(addText);
-      $(".try").text("10");
-      $("#res1d").children().removeClass("current");
-      $("#res2d").children().removeClass("current");
-      $("#res3d").children().removeClass("current");
-      $("#res4d").children().removeClass("current");
-      $("#res5d").children().removeClass("current");
-      $("#res6d").children().removeClass("current");
-      $("#res7d").children().removeClass("current");
-      $("#res8d").children().removeClass("current");
-      $("#res9d").children().removeClass("current");
-      $("#res10d").children().addClass("current");
-      guesCount++;
-      }
-
-
 
       if (addText[0] == number1) {
-        $(".pos1").filter( ".current" ).text("=");
-        $(".pos1").filter( ".current" ).addClass("pos-yes");
+        $(".pos1").filter(".current").text("=");
+        $(".pos1").filter(".current").addClass("pos-yes");
         goodResult1 = true;
-      }
-      else if (addText[0] == number2 || addText[0] == number3 || addText[0] == number4 ) {
-        $(".pos1").filter( ".current" ).text("?");
-        $(".pos1").filter( ".current" ).addClass("pos-maybe");
-      }
-      else {
-        $(".pos1").filter( ".current" ).text("x");
-        $(".pos1").filter( ".current" ).addClass("pos-no");
+      } else if (
+        addText[0] == number2 ||
+        addText[0] == number3 ||
+        addText[0] == number4
+      ) {
+        $(".pos1").filter(".current").text("?");
+        $(".pos1").filter(".current").addClass("pos-maybe");
+      } else {
+        $(".pos1").filter(".current").text("x");
+        $(".pos1").filter(".current").addClass("pos-no");
       }
 
       if (addText[1] == number2) {
-        $(".pos2").filter( ".current" ).text("=");
-        $(".pos2").filter( ".current" ).addClass("pos-yes");
+        $(".pos2").filter(".current").text("=");
+        $(".pos2").filter(".current").addClass("pos-yes");
         goodResult2 = true;
-      }
-      else if (addText[1] == number1 || addText[1] == number3 || addText[1] == number4 ) {
-        $(".pos2").filter( ".current" ).filter( ".current" ).text("?");
-        $(".pos2").filter( ".current" ).addClass("pos-maybe");
-      }
-      else {
-        $(".pos2").filter( ".current" ).text("x");
-        $(".pos2").filter( ".current" ).addClass("pos-no");
+      } else if (
+        addText[1] == number1 ||
+        addText[1] == number3 ||
+        addText[1] == number4
+      ) {
+        $(".pos2").filter(".current").filter(".current").text("?");
+        $(".pos2").filter(".current").addClass("pos-maybe");
+      } else {
+        $(".pos2").filter(".current").text("x");
+        $(".pos2").filter(".current").addClass("pos-no");
       }
 
       if (addText[2] == number3) {
-        $(".pos3").filter( ".current" ).text("=");
-        $(".pos3").filter( ".current" ).addClass("pos-yes");
+        $(".pos3").filter(".current").text("=");
+        $(".pos3").filter(".current").addClass("pos-yes");
         goodResult3 = true;
-      }
-      else if (addText[2] == number1 || addText[2] == number2 || addText[2] == number4 ) {
-        $(".pos3").filter( ".current" ).text("?");
-        $(".pos3").filter( ".current" ).addClass("pos-maybe");
-      }
-      else {
-        $(".pos3").filter( ".current" ).filter( ".current" ).text("x");
-        $(".pos3").filter( ".current" ).addClass("pos-no");
+      } else if (
+        addText[2] == number1 ||
+        addText[2] == number2 ||
+        addText[2] == number4
+      ) {
+        $(".pos3").filter(".current").text("?");
+        $(".pos3").filter(".current").addClass("pos-maybe");
+      } else {
+        $(".pos3").filter(".current").filter(".current").text("x");
+        $(".pos3").filter(".current").addClass("pos-no");
       }
 
       if (addText[3] == number4) {
-        $(".pos4").filter( ".current" ).text("=");
-        $(".pos4").filter( ".current" ).addClass("pos-yes");
+        $(".pos4").filter(".current").text("=");
+        $(".pos4").filter(".current").addClass("pos-yes");
         goodResult4 = true;
-      }
-      else if (addText[3] == number1 || addText[3] == number2 || addText[3] == number3 ) {
-        $(".pos4").filter( ".current" ).text("?");
-        $(".pos4").filter( ".current" ).addClass("pos-maybe");
-      }
-      else {
-        $(".pos4").filter( ".current" ).text("x");
-        $(".pos4").filter( ".current" ).addClass("pos-no");
+      } else if (
+        addText[3] == number1 ||
+        addText[3] == number2 ||
+        addText[3] == number3
+      ) {
+        $(".pos4").filter(".current").text("?");
+        $(".pos4").filter(".current").addClass("pos-maybe");
+      } else {
+        $(".pos4").filter(".current").text("x");
+        $(".pos4").filter(".current").addClass("pos-no");
       }
 
-      $(".display").text("")
+      $(".display").text("");
 
       if (goodResult1 && goodResult2 && goodResult3 && goodResult4) {
         winScreen();
@@ -296,12 +384,10 @@ $(document).ready( function() {
       if (guesCount == 11) {
         boomScreen();
       }
-
     }
   });
 
   // Print actual year into the footer
   var year = new Date();
   $(".foot-link").text(year.getFullYear());
-
 });
