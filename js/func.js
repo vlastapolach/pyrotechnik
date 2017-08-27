@@ -135,10 +135,9 @@ $(document).ready(function() {
                   <p>Nejlepší počet pokusů: <span class="red">` +
           bestCount() +
           `</span><br />
-                  <p>Nejlepší čas do výbuchu: <span class="red">0:` +
-          lessThanTen +
+                  <p>Nejlepší čas do výbuchu: <span class="red">` +
           bestTime() +
-          `</span></p>
+          ` sekund</span></p>
                 </div>
               </div>
             </div>`
@@ -407,7 +406,8 @@ $(document).ready(function() {
         winScreen();
       }
 
-      if (guesCount == 11) {
+      //set 10 for 10 guesses
+      if (guesCount == 6) {
         boomScreen();
       }
     }
