@@ -39,33 +39,35 @@ $(document).ready(function() {
     printTimer -= 1;
   }
   if (localStorage.tryCount == NaN || localStorage.tryCount == undefined) {
-  localStorage.tryCount = 0;
+    localStorage.tryCount = 0;
   }
   if (localStorage.winCount == NaN || localStorage.winCount == undefined) {
-  localStorage.winCount = 0;
+    localStorage.winCount = 0;
   }
   if (localStorage.bestCount == NaN || localStorage.bestCount == undefined) {
-  localStorage.bestCount = 10;
+    localStorage.bestCount = 10;
   }
   if (localStorage.bestTime == NaN || localStorage.bestTime == undefined) {
-  localStorage.bestTime = 0;
+    localStorage.bestTime = 0;
   }
 
   bestCount = function() {
     if (guesCount < localStorage.bestCount) {
+      localStorage.bestCount = guesCount;
       return guesCount;
     } else {
       return localStorage.bestCount;
     }
-  }
+  };
 
   bestTime = function() {
     if (printTimer > localStorage.bestTime) {
+      localStorage.bestTime = printTimer;
       return printTimer;
     } else {
       return localStorage.bestTime;
     }
-  }
+  };
 
   progressBar = function() {
     return Math.floor(localStorage.winCount / localStorage.tryCount * 100);
@@ -79,13 +81,23 @@ $(document).ready(function() {
             <h3>Celkové výsledky</h3>
               <div class="row">
                 <div class="col-xs-12">
-                  <p>Počet pokusů celkem: <span class="red">` + localStorage.tryCount + `</span><br />
-                  Počet výher celkem: <span class="red">` + localStorage.winCount + `</span></p>
+                  <p>Počet pokusů celkem: <span class="red">` +
+          localStorage.tryCount +
+          `</span><br />
+                  Počet výher celkem: <span class="red">` +
+          localStorage.winCount +
+          `</span></p>
                   Úspěšnost: <br />
                   <div class="progress">
-                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="` + progressBar() + `"
-                    aria-valuemin="0" aria-valuemax="100" style="width:` + progressBar() + `%">
-                      ` + progressBar() + `%
+                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="` +
+          progressBar() +
+          `"
+                    aria-valuemin="0" aria-valuemax="100" style="width:` +
+          progressBar() +
+          `%">
+                      ` +
+          progressBar() +
+          `%
                     </div>
                   </div>
                 </div>
@@ -99,25 +111,40 @@ $(document).ready(function() {
             <h3>Celkové výsledky</h3>
               <div class="row">
                 <div class="col-sm-6">
-                  <p>Počet pokusů celkem: <span class="red">` + localStorage.tryCount + `</span><br />
-                  Počet výher celkem: <span class="red">` + localStorage.winCount + `</span></p>
+                  <p>Počet pokusů celkem: <span class="red">` +
+          localStorage.tryCount +
+          `</span><br />
+                  Počet výher celkem: <span class="red">` +
+          localStorage.winCount +
+          `</span></p>
                   Úspěšnost: <br />
                   <div class="progress">
-                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="` + progressBar() + `"
-                    aria-valuemin="0" aria-valuemax="100" style="width:` + progressBar() + `%">
-                      ` + progressBar() + `%
+                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="` +
+          progressBar() +
+          `"
+                    aria-valuemin="0" aria-valuemax="100" style="width:` +
+          progressBar() +
+          `%">
+                      ` +
+          progressBar() +
+          `%
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-6">
-                  <p>Nejlepší počet pokusů: <span class="red">` + bestCount() + `</span><br />
-                  <p>Nejlepší čas do výbuchu: <span class="red">0:` + lessThanTen + bestTime() + `</span></p>
+                  <p>Nejlepší počet pokusů: <span class="red">` +
+          bestCount() +
+          `</span><br />
+                  <p>Nejlepší čas do výbuchu: <span class="red">0:` +
+          lessThanTen +
+          bestTime() +
+          `</span></p>
                 </div>
               </div>
             </div>`
       );
     }
-  }
+  };
 
   winScreen = function() {
     //If the browser supports localStorage, save the results
@@ -126,7 +153,7 @@ $(document).ready(function() {
       localStorage.winCount++;
       leaderboardScreen();
     }
-      $("#content").html(
+    $("#content").html(
       `
         <div class="container">
           <div class="row text-center">
@@ -157,7 +184,7 @@ $(document).ready(function() {
       localStorage.tryCount++;
       leaderboardScreen();
     }
-      $("#content").html(`
+    $("#content").html(`
         <div class="container">
           <div class="row text-center">
             <div class="col-sm-6">
